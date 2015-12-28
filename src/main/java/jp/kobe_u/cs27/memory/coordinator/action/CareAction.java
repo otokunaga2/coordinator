@@ -1,12 +1,10 @@
-package jp.kobe_u.cs27.memory.coordinator.model;
+package jp.kobe_u.cs27.memory.coordinator.action;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-
-import jp.kobe_u.cs27.memory.coordinator.dao.ActionDAO;
 
 public class CareAction {
 	private String actionid;

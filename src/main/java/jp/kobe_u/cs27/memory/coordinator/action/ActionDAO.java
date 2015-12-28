@@ -1,6 +1,4 @@
-package jp.kobe_u.cs27.memory.coordinator.dao;
-
-import jp.kobe_u.cs27.memory.coordinator.model.CareAction;
+package jp.kobe_u.cs27.memory.coordinator.action;
 
 public class ActionDAO {
 

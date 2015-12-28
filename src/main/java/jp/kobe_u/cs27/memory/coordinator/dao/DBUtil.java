@@ -14,13 +14,19 @@ import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
+import com.mongodb.WriteResult;
+
+import jp.kobe_u.cs27.memory.coordinator.eca.CareECA;
 
 public class DBUtil {
 	private static Mongo m;
 	private static DB db;
 	private static String ip = "localhost";
-	//private static String ip = "localhost";
 
+	/**
+	 * TODO
+	 * 外出ししたい
+	 */
 	private static final String dbName = "coordinatordb";
 
 	
@@ -45,7 +51,7 @@ public class DBUtil {
 	}
 
 	
-	public DBCollection getCollection(String collectionName){
+	public static DBCollection getCollection(String collectionName){
 		return db.getCollection(collectionName);
 	}
 	
@@ -74,10 +80,14 @@ public class DBUtil {
 	 */
 	public static boolean remove(String collectionName,BasicDBObject dbobject) {
 		DBCollection coll = db.getCollection(collectionName);
-		coll.remove(dbobject);
-		return true;
+		WriteResult result = coll.remove(dbobject);
+		return result.isUpdateOfExisting();
 	}
+	
+	
 
+	
+	
 	/***
 	 * コレクション内の指定データを更新する
 	 * @param collectionName
@@ -85,6 +95,7 @@ public class DBUtil {
 	 */
 	public static Object update(String collectionName,BasicDBObject dbobjectBf,BasicDBObject dbobjectAf) {
 		DBCollection coll = db.getCollection(collectionName);
+		
 		coll.update(dbobjectBf, dbobjectAf);
 		return dbobjectAf;
 	}
@@ -121,11 +132,22 @@ public class DBUtil {
 	 */
 	public static Object add(String collectionName, BasicDBObject dbobject) {
 		DBCollection coll = db.getCollection(collectionName);
+		BasicDBObject incrementObj = incrementNumberId(collectionName);
+		String key = "unique_id";
+		dbobject.append(key,incrementObj.getInt(key));
 		coll.insert(dbobject);
 		return dbobject.get("_id");
 	}
+	
+	
+	
 
-
+	public boolean replace(String collectionName, BasicDBObject query, BasicDBObject replacedObj){
+		DBCollection coll = db.getCollection(collectionName);
+		WriteResult result = coll.update(query, replacedObj,true/*もしデータがなければ作成する*/,false/**/);
+		return result.isUpdateOfExisting();
+	}
+	
 	/**
 	 * DB内へのfind()のラッパーメソッド
 	 *
@@ -139,14 +161,14 @@ public class DBUtil {
 	}
 	
 	/**
-	 * DBを更新する際に、
+	 * DBを更新する際に、IDを付与するためのメソッド
 	 * @param collectionName
 	 * @param query
 	 * @return
 	 */
-	public BasicDBObject incrementNumberId(String collection){
-		DBCollection col = this.getCollection("test");
-		BasicDBObject incremenStatement = new BasicDBObject("number",col.count()+1);
+	public static BasicDBObject incrementNumberId(String collectionName){
+		DBCollection col = getCollection(collectionName);
+		BasicDBObject incremenStatement = new BasicDBObject("unique_id",col.count()+1);
 		return incremenStatement;
 		
 	}

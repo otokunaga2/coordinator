@@ -30,7 +30,7 @@ public class TimeMongoDao {
 	 */
 	public boolean createSingleEventTime(String timePattern){
 		DBCollection col = dbUtil.getCollection("test");
-		WriteResult result = col.insert(new BasicDBObject("number",col.count()+1).append("testTime","2015-12-23 03:23:33"));/*auto increment*/
+		WriteResult result = col.insert(new BasicDBObject("number",col.count()+1).append("testTime",timePattern));/*auto increment*/
 		return result.isUpdateOfExisting();
 		
 	}
