@@ -5,9 +5,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 
 /**
@@ -22,7 +20,7 @@ public class TimeContextDAO {
 		dbUtil = DBUtil.getInstance();
 		dt = new DateTime();
 	}
-	
+
 
 	/**
 	 * @param timePattern
@@ -32,9 +30,9 @@ public class TimeContextDAO {
 		DBCollection col = dbUtil.getCollection("test");
 		WriteResult result = col.insert(new BasicDBObject("number",col.count()+1).append("testTime",timePattern));/*auto increment*/
 		return result.isUpdateOfExisting();
-		
+
 	}
-	
+
 	/**
 	 * @param from
 	 * @param to
@@ -44,18 +42,15 @@ public class TimeContextDAO {
 		DBCollection col = dbUtil.getCollection("test");
 		WriteResult result = col.insert(new BasicDBObject("number",col.count()+1).append("from","03:23:33").append("to", "09:23:33"));/*auto increment*/
 		return result.isUpdateOfExisting();
-		
+
 	}
 
-	
+
 	public boolean createDailyTime(){
 		return false;
 	}
-	
-	public boolean recurrenceTime(){
-		return false;
-		
-	}
+
+
 	private boolean checkDateFormat(String target){
 		DateTimeFormatter date = null;
 		try{
@@ -66,10 +61,5 @@ public class TimeContextDAO {
 		}
 		return true;
 	}
-	
-	
-	public boolean checkDateFormatWrapper(String target){
-		return this.checkDateFormat(target);
-	}
-	
+
 }

@@ -2,7 +2,7 @@ package jp.kobe_u.cs27.memory.coordinator.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="event")
+@XmlRootElement
 public class TriggerEvent {
 
 	private String property;

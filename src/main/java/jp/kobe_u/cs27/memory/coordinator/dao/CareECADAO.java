@@ -20,6 +20,7 @@ public class CareECADAO {
 	private static final String TIMECONTEXT = "timeContext";
 	private static final String LASTINVOCATION = "lastInvocation";
 	private static final String UNIQUE_ID = "uniquie_id";
+	private static final String ACTION_ID = "actionid";
 	private final String collectionName = "care_eca";
 	private DBUtil db = DBUtil.getInstance();
 	DBCollection dbCollection;
@@ -43,6 +44,7 @@ public class CareECADAO {
 		insertObj.append(VALUE, ecaObj.getValue());
 		insertObj.append(TIMECONDITION, ecaObj.getTimeCondition());
 		insertObj.append(TIMECONTEXT, ecaObj.getTimeContext());
+		insertObj.append(ACTION_ID, ecaObj.getActionId());
 		Object obj =db.add(this.collectionName, insertObj);
 		return obj.toString();
 	}
@@ -56,6 +58,10 @@ public class CareECADAO {
 		return true;
 	}
 
+	public boolean deleteECA(){
+
+		return true;
+	}
 	/**
 	 * トリガーイベントを利用して、データを検索
 	 * @param t_event
@@ -80,6 +86,7 @@ public class CareECADAO {
 				String val = obj.getString(VALUE);
 				String timeCondition = obj.getString(TIMECONDITION);
 				String timeContext = obj.getString(TIMECONTEXT);
+				String actionId = obj.getString(ACTION_ID);
 				tempECAPojo.setTimeCondition(timeCondition);
 				tempECAPojo.setTimeContext(timeContext);
 			}catch(NoSuchElementException e){

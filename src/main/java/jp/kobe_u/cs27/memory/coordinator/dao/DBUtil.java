@@ -184,5 +184,16 @@ public class DBUtil {
 	    query.put("_id", objectId);
 		return find(collectionName, query);
 	}
+	public static boolean deleteById(String colllectionName, ObjectId objectId){
+		BasicDBObject document = new BasicDBObject();
+		document.append("_id", objectId);
+		WriteResult result = db.getCollection(colllectionName).remove(document);
+		return result.isUpdateOfExisting();
+	}
+
+	public DBCursor findOne(String collectionName, BasicDBObject queryObj) {
+		DBCursor dbCursor= (DBCursor) db.getCollection(collectionName).findOne(queryObj);
+		return dbCursor;
+	}
 
 }
