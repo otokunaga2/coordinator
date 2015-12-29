@@ -1,10 +1,6 @@
-package jp.kobe_u.cs27.memory.coordinator.eca;
+package jp.kobe_u.cs27.memory.coordinator.model;
 
-import org.joda.time.DateTime;
 import org.json.JSONObject;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.util.JSON;
 
 public class CareECA {
 	private String property;
@@ -12,7 +8,7 @@ public class CareECA {
 	private String timeCondition;
 	private String condition;
 
-	private String[] actionId;/* CareActionのobjectidを参照するように設計 */
+	private String actionId;/* CareActionのobjectidを参照するように設計 */
 
 	/**
 	 * @param prop
@@ -63,11 +59,11 @@ public class CareECA {
 		this.condition = timeContext;
 	}
 
-	public String[] getActionId() {
+	public String getActionId() {
 		return actionId;
 	}
 
-	public void setActionId(String[] actionId) {
+	public void setActionId(String actionId) {
 		this.actionId = actionId;
 	}
 

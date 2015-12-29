@@ -14,11 +14,11 @@ import com.mongodb.WriteResult;
  * @author otokunaga
  *
  */
-public class TimeMongoDao {
+public class TimeContextDAO {
 	private final String collectionName = "";
 	private DBUtil dbUtil = null;
 	DateTime dt = null;
-	public TimeMongoDao() {
+	public TimeContextDAO() {
 		dbUtil = DBUtil.getInstance();
 		dt = new DateTime();
 	}

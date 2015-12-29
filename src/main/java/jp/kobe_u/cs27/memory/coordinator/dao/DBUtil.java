@@ -16,8 +16,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 
-import jp.kobe_u.cs27.memory.coordinator.eca.CareECA;
-
 public class DBUtil {
 	private static Mongo m;
 	private static DB db;
@@ -29,7 +27,7 @@ public class DBUtil {
 	 */
 	private static final String dbName = "coordinatordb";
 
-	
+
 	// for singleton
     private static DBUtil singleton = new DBUtil();
 
@@ -50,11 +48,11 @@ public class DBUtil {
 		}
 	}
 
-	
+
 	public static DBCollection getCollection(String collectionName){
 		return db.getCollection(collectionName);
 	}
-	
+
 	/***
 	 * 全コレクションを削除する
 	 */
@@ -83,11 +81,11 @@ public class DBUtil {
 		WriteResult result = coll.remove(dbobject);
 		return result.isUpdateOfExisting();
 	}
-	
-	
 
-	
-	
+
+
+
+
 	/***
 	 * コレクション内の指定データを更新する
 	 * @param collectionName
@@ -95,7 +93,7 @@ public class DBUtil {
 	 */
 	public static Object update(String collectionName,BasicDBObject dbobjectBf,BasicDBObject dbobjectAf) {
 		DBCollection coll = db.getCollection(collectionName);
-		
+
 		coll.update(dbobjectBf, dbobjectAf);
 		return dbobjectAf;
 	}
@@ -138,16 +136,16 @@ public class DBUtil {
 		coll.insert(dbobject);
 		return dbobject.get("_id");
 	}
-	
-	
-	
+
+
+
 
 	public boolean replace(String collectionName, BasicDBObject query, BasicDBObject replacedObj){
 		DBCollection coll = db.getCollection(collectionName);
 		WriteResult result = coll.update(query, replacedObj,true/*もしデータがなければ作成する*/,false/**/);
 		return result.isUpdateOfExisting();
 	}
-	
+
 	/**
 	 * DB内へのfind()のラッパーメソッド
 	 *
@@ -159,7 +157,7 @@ public class DBUtil {
 		DBCollection coll = db.getCollection(collectionName);
 		return coll.find(query);
 	}
-	
+
 	/**
 	 * DBを更新する際に、IDを付与するためのメソッド
 	 * @param collectionName
@@ -170,9 +168,9 @@ public class DBUtil {
 		DBCollection col = getCollection(collectionName);
 		BasicDBObject incremenStatement = new BasicDBObject("unique_id",col.count()+1);
 		return incremenStatement;
-		
+
 	}
-	
+
 	/**
 	 * DB内へのfind()のラッパーメソッド
 	 * _id から一つだけ取り出す
