@@ -3,10 +3,8 @@ package jp.kobe_u.cs27.memory.coordinator.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class TriggerEvent {
-
+public class TriggerEvent extends AbstractEvent{
 	private String property;
-
 	private String value;
 
 	public String getValue() {

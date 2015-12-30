@@ -38,7 +38,7 @@ public class MyResource {
     	TriggerEvent event = new TriggerEvent();
     	event.setProperty(prop);
     	event.setValue(value);
-    	inputCtroller.analyzeInputEventData(event);
+    	inputCtroller.findConditionUsingEvent(event);
         return Response.ok(event).build();
     }
 

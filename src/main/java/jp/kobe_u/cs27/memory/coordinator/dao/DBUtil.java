@@ -130,7 +130,7 @@ public class DBUtil {
 	 */
 	public static Object add(String collectionName, BasicDBObject dbobject) {
 		DBCollection coll = db.getCollection(collectionName);
-		BasicDBObject incrementObj = incrementNumberId(collectionName);
+		BasicDBObject incrementObj = getNextSequenceObject(collectionName);
 		String key = "unique_id";
 		dbobject.append(key,incrementObj.getInt(key));
 		coll.insert(dbobject);
@@ -164,7 +164,7 @@ public class DBUtil {
 	 * @param query
 	 * @return
 	 */
-	public static BasicDBObject incrementNumberId(String collectionName){
+	public static BasicDBObject getNextSequenceObject(String collectionName){
 		DBCollection col = getCollection(collectionName);
 		BasicDBObject incremenStatement = new BasicDBObject("unique_id",col.count()+1);
 		return incremenStatement;

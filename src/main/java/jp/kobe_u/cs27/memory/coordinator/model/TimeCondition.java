@@ -1,6 +1,6 @@
 package jp.kobe_u.cs27.memory.coordinator.model;
 
-public class TimeCondition {
+public class TimeCondition extends AbstractCondition{
 	private String from;
 	private String to;
 	public String getFrom() {

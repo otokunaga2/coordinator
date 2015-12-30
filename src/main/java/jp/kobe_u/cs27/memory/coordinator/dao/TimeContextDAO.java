@@ -1,8 +1,6 @@
 package jp.kobe_u.cs27.memory.coordinator.dao;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -42,24 +40,10 @@ public class TimeContextDAO {
 		DBCollection col = dbUtil.getCollection("test");
 		WriteResult result = col.insert(new BasicDBObject("number",col.count()+1).append("from","03:23:33").append("to", "09:23:33"));/*auto increment*/
 		return result.isUpdateOfExisting();
-
 	}
-
 
 	public boolean createDailyTime(){
 		return false;
-	}
-
-
-	private boolean checkDateFormat(String target){
-		DateTimeFormatter date = null;
-		try{
-			date = DateTimeFormat.forPattern(target);
-		}catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-		return true;
 	}
 
 }
