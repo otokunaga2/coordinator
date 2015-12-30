@@ -93,7 +93,7 @@ public class CareECADAO {
 			}catch(NoSuchElementException e){
 				e.printStackTrace();
 			}finally{
-
+				cursor.next();
 			}
 		}
 		return careECAList;

@@ -31,12 +31,44 @@ public class MyResource {
      *
      * @return String that will be returned as a text/plain response.
      */
+	public MyResource(){
+	}
+
     @GET
     @Path("/myresource")
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
         return "Got it!2";
     }
+
+
+
+    @POST
+    @Path("/consume")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response consumeEvent( @FormParam("property") String prop, @FormParam("value") String value) {
+    	TriggerEvent event = new TriggerEvent();
+    	event.setProperty(prop);
+    	event.setValue(value);
+    	System.out.println(prop);
+    	System.out.println(value);
+    	if(inputCtroller == null){
+    		inputCtroller = new InputController();
+    	}
+    	List<CareECA> eventList = inputCtroller.findConditionUsingEvent(event);
+    	boolean result = false;
+    	System.out.println("here");
+    	if(eventList != null){
+    		result = inputCtroller.isAction(eventList);
+    	}
+//
+    	if(result == true){
+    		return Response.ok().build();
+    	}
+        return Response.ok().build();
+    }
+
 
     @GET
     @Path("/test/")
@@ -57,6 +89,7 @@ public class MyResource {
 
     @POST
     @Path("/create")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(@Context UriInfo uriInfo, @FormParam("property") String prop, @FormParam("value") String value,  @FormParam("from") String from, @FormParam("to") String to){
     	boolean result = inputCtroller.saveECA(prop, value, from, to);
