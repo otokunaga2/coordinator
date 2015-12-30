@@ -12,10 +12,11 @@ import com.mongodb.DBObject;
 public class ActionDAOTest {
 	private ActionDAO actionDAO = null;
 
-	DateTime dt = new DateTime();
+	DateTime dt = null;
 	@Before
 	public void setUp() throws Exception {
 		actionDAO = new ActionDAO();
+		dt = new DateTime();
 	}
 
 	@After
@@ -29,7 +30,10 @@ public class ActionDAOTest {
 
 	@Test
 	public void testFindAction() {
-		String actionId = "1";
+		/*sample data insert*/
+		actionDAO.createAction("test action", "http://example.com");
+
+		long actionId = 1;
 		DBObject result = actionDAO.findAction(actionId);
 		assertNotNull(result);
 	}
@@ -42,8 +46,7 @@ public class ActionDAOTest {
 	@Test
 	public void testCreateAction() {
 		String actionId = "1";
-
-		actionDAO.createAction("test action", "http://example.com", dt);
+		actionDAO.createAction("test action", "http://example.com");
 	}
 
 }

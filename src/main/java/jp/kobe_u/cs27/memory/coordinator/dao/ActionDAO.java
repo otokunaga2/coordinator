@@ -9,16 +9,22 @@ import com.mongodb.DBObject;
 public class ActionDAO {
 	private DBUtil db = DBUtil.getInstance();
 	private static final String actionCollectionName = "care_action";
-	private static final String ACTIONID = "actionid";
+	private static final String ACTIONID = "unique_id";
+	private DateTime dateTime;
+
+	public ActionDAO(){
+		dateTime = new DateTime();
+	}
+
 	public String updateAction(){
 		DBCollection collection = db.getCollection(actionCollectionName);
 		return "";
 	}
-	public DBObject findAction(String actionId){
+	public DBObject findAction(long actionId){
 		DBCollection collection = db.getCollection(actionCollectionName);
 		BasicDBObject query = new BasicDBObject();
 		query.append(ACTIONID, actionId);
-		DBObject actionObject = collection.findOne(actionCollectionName,query);
+		DBObject actionObject = collection.findOne(query);
 		return actionObject;
 	}
 
@@ -29,11 +35,12 @@ public class ActionDAO {
 		return null;
 	}
 
-	public Object createAction(String description, String url, DateTime dateTime){
+	public Object createAction(String description, String url){
 		DBCollection collection = db.getCollection(actionCollectionName);
 		BasicDBObject document = new BasicDBObject();
 		document.append("description", description);
 		document.append("url", url);
+		document.append("lastInvocatin", dateTime.now().toString("yyyy/MM/dd HH:mm:ss"));
 		Object obj = db.add(actionCollectionName, document);
 		return obj;
 	}

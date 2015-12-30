@@ -89,9 +89,6 @@ public class CareECADAOTest {
 	@Test
 	public void testUpdateECA() {
 		CareECA afterECA = new CareECA(null/**/, null/**/, null/**/, null/**/);
-
-//		ecaDAO.updateECA(_id, updateECA);
-		//ecaDAO.updateECA(_id, updateECA)
 	}
 
 }
