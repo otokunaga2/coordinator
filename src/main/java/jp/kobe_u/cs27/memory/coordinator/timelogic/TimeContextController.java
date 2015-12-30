@@ -23,7 +23,8 @@ public class TimeContextController {
 	public DateTime getCurrentDateTime(){
 		return currentDateTime;
 	}
-
+	
+	
 	public boolean evaluate(TimeCondition timeCond) {
 		String startTime = timeCond.getFrom();
 		String endTime = timeCond.getTo();
@@ -43,6 +44,7 @@ public class TimeContextController {
 		}
 	}
 
+	
 	private DateTime createDateTimeFormatUsingStr(
 			String dateTime/* e.g. 12:13:00 */) {
 		Pattern pattern = Pattern.compile(":");

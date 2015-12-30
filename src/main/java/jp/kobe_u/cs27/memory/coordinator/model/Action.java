@@ -1,16 +1,19 @@
 package jp.kobe_u.cs27.memory.coordinator.model;
 
 public class Action {
-	private String actionid;
+	private long actionid;
 	private String url;
 	private String description;
 
 
-	public Action(String actionid, String url, String description) {
+	public Action(long actionid, String url, String description) {
 		this.actionid = actionid;
 		this.url = url;
 		this.description = description;
 		update();
+	}
+
+	public Action() {
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class Action {
 	}
 
 	// getter 及び setter
-	public String getActionid() {
+	public long getActionid() {
 		return actionid;
 	}
 
@@ -35,8 +38,8 @@ public class Action {
 		return description;
 	}
 
-	public void setActionid(String actionid) {
-		this.actionid = actionid;
+	public void setActionid(long l) {
+		this.actionid = l;
 	}
 
 	public void setUrl(String url) {

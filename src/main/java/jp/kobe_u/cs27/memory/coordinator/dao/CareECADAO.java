@@ -89,10 +89,11 @@ public class CareECADAO {
 				String actionId = obj.getString(ACTION_ID);
 				tempECAPojo.setTimeCondition(timeCondition);
 				tempECAPojo.setTimeContext(timeContext);
+				careECAList.add(tempECAPojo);
 			}catch(NoSuchElementException e){
 				e.printStackTrace();
 			}finally{
-				careECAList.add(tempECAPojo);
+
 			}
 		}
 		return careECAList;

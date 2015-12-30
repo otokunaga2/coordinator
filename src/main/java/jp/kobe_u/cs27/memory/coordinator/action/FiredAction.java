@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class Action {
+public class FiredAction {
 
 	/**
 	 * URLを叩く

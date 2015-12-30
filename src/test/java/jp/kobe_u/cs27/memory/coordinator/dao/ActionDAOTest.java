@@ -5,9 +5,10 @@ import static org.junit.Assert.*;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.mongodb.DBObject;
+import jp.kobe_u.cs27.memory.coordinator.model.Action;
 
 public class ActionDAOTest {
 	private ActionDAO actionDAO = null;
@@ -23,7 +24,7 @@ public class ActionDAOTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	@Ignore
 	public void testUpdateAction() {
 		fail("まだ実装されていません");
 	}
@@ -34,11 +35,11 @@ public class ActionDAOTest {
 		actionDAO.createAction("test action", "http://example.com");
 
 		long actionId = 1;
-		DBObject result = actionDAO.findAction(actionId);
+		Action result = actionDAO.findAction(actionId);
 		assertNotNull(result);
 	}
 
-	@Test
+	@Ignore
 	public void testDeleteAction() {
 		fail("まだ実装されていません");
 	}

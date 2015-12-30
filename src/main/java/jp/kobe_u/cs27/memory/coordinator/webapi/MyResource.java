@@ -1,14 +1,21 @@
 package jp.kobe_u.cs27.memory.coordinator.webapi;
 
+import java.net.URI;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
+import jp.kobe_u.cs27.memory.coordinator.model.CareECA;
 import jp.kobe_u.cs27.memory.coordinator.model.TriggerEvent;
 import jp.kobe_u.cs27.memory.coordinator.timelogic.InputController;
 
@@ -34,12 +41,31 @@ public class MyResource {
     @GET
     @Path("/test/")
     @Produces(MediaType.APPLICATION_XML)
-    public Response test(@QueryParam("property") String prop, @QueryParam("value") String value) {
+    public Response test(@Context UriInfo uriInfo, @QueryParam("property") String prop, @QueryParam("value") String value) {
     	TriggerEvent event = new TriggerEvent();
     	event.setProperty(prop);
     	event.setValue(value);
-    	inputCtroller.findConditionUsingEvent(event);
+    	List<CareECA> eventList = inputCtroller.findConditionUsingEvent(event);
+    	boolean result = inputCtroller.isAction(eventList);
+
+    	if(result == true){
+    		 URI uri = uriInfo.getBaseUriBuilder().path("success.html").build();
+    		return Response.seeOther(uri).build();
+    	}
         return Response.ok(event).build();
+    }
+
+    @POST
+    @Path("/create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response create(@Context UriInfo uriInfo, @FormParam("property") String prop, @FormParam("value") String value,  @FormParam("from") String from, @FormParam("to") String to){
+    	boolean result = inputCtroller.saveECA(prop, value, from, to);
+    	if(result == true){
+    		return Response.ok().build();
+    	}else{
+    		return Response.status(500).build();
+    	}
+
     }
 
 
