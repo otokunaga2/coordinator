@@ -40,48 +40,37 @@ public class MyResource {
     public String getIt() {
         return "Got it!2";
     }
+    @GET
+    @Path("/action")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String invokeAction(@QueryParam(value="actionId") long actionId){
+    	boolean result = inputCtroller.invokeAction(actionId);
+    	if(result){
+    		return "success";
+    	}
+    	return "fail";
+    }
 
 
 
     @POST
     @Path("/consume")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response consumeEvent( @FormParam("property") String prop, @FormParam("value") String value) {
-    	TriggerEvent event = new TriggerEvent();
-    	event.setProperty(prop);
-    	event.setValue(value);
-
-    	if(inputCtroller == null){
-    		inputCtroller = new InputController();
-    	}
-    	List<CareECA> eventList = inputCtroller.findConditionUsingEvent(event);
-    	boolean result = false;
-    	if(eventList != null){
-    		result = inputCtroller.isAction(eventList);
-    		return Response.ok(200).build();
-    	}
-    	return Response.ok(202).build();
-
-    }
-
-
-    @GET
-    @Path("/test/")
-    @Produces(MediaType.APPLICATION_XML)
-    public Response test(@Context UriInfo uriInfo, @QueryParam("property") String prop, @QueryParam("value") String value) {
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response consumeEvent(@Context UriInfo uriInfo, @FormParam("property") String prop, @FormParam("value") String value) {
     	TriggerEvent event = new TriggerEvent();
     	event.setProperty(prop);
     	event.setValue(value);
     	List<CareECA> eventList = inputCtroller.findConditionUsingEvent(event);
-    	boolean result = inputCtroller.isAction(eventList);
-
-    	if(result == true){
+    	boolean result = inputCtroller.isValidEventCondition(eventList);
+    	if(result){
     		 URI uri = uriInfo.getBaseUriBuilder().path("success.html").build();
     		return Response.seeOther(uri).build();
     	}
-        return Response.ok(event).build();
+        return Response.ok(200).build();
+
     }
+
 
     @POST
     @Path("/create/detail")

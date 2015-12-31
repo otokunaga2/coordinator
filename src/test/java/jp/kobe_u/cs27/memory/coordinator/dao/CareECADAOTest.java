@@ -50,15 +50,16 @@ public class CareECADAOTest {
 
 		String timeCtx = "{'after':30, 'unit': 'minites'}";
 		eca.setTimeContext(timeCtx);
-		eca.setActionId("1");
+		eca.setActionId(1);
 		Object obj = ecaDAO.createECA(eca);
 		assertNotNull(obj);
 	}
 
 	@Test
 	public void testRemoveECA() {
-
-
+		boolean actual = ecaDAO.removeECA(2);
+		boolean expected = true;
+		assertEquals(expected,actual);
 	}
 
 	@Before

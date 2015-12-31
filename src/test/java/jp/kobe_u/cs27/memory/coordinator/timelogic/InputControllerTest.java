@@ -26,7 +26,7 @@ public class InputControllerTest {
 		/*検索対象のdummyデータの登録をしておく*/
 		daoController = new CareECADAO();
 		CareECA eca = new CareECA();
-		eca.setActionId("-1");
+		eca.setActionId(-1);
 		eca.setValue("dummyVal");
 		eca.setProperty("dummyProp");
 		eca.setTimeContext("{timeValidation:  }");

@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import com.google.gson.Gson;
 
+import jp.kobe_u.cs27.memory.coordinator.action.FiredAction;
 import jp.kobe_u.cs27.memory.coordinator.dao.ActionDAO;
 import jp.kobe_u.cs27.memory.coordinator.dao.CareECADAO;
 import jp.kobe_u.cs27.memory.coordinator.model.AbstractEvent;
@@ -20,7 +21,9 @@ public class InputController {
 	ConcurrentHashMap<Long, DateTime> actionManegementMap = null;/* スレッドセーフなhashmap */
 	ConcurrentHashMap<String, Boolean> firstFilterResult = null;
 	private ActionDAO actionDAO = null;
+	private FiredAction firedAction = null;
 	public InputController() {
+		firedAction = new FiredAction();
 		actionDAO = new ActionDAO();
 		ecaDAO = new CareECADAO();
 		timeCtxController = new TimeContextController();
@@ -54,6 +57,7 @@ public class InputController {
 		TimeCondition timeCond = new TimeCondition(from,to);
 		String jsonConvrtedTimeCond = gson.toJson(timeCond);
 		eca.setTimeCondition(jsonConvrtedTimeCond);
+		System.out.println(jsonConvrtedTimeCond);
 		String result = ecaDAO.createECA(eca);
 		if(result != null){
 			return true;
@@ -62,7 +66,13 @@ public class InputController {
 		}
 	}
 
-
+	public boolean invokeAction(long actionId){
+		boolean result = firedAction.getAndInvokeActionFromId(actionId);
+		if(result == true){
+			actionDAO.updateAction(actionId);
+		}
+		return false;
+	}
 	/**
 	 * イベントの条件をもとに、実行可能なケアを検索するためのメソッド
 	 *
@@ -81,7 +91,7 @@ public class InputController {
 		return eventList;
 	}
 
-	public boolean isAction(List<CareECA> eventList) {
+	public boolean isValidEventCondition(List<CareECA> eventList) {
 		boolean result = false;
 		for (CareECA targetCare : eventList) {
 			// 時間の条件のチェック
@@ -89,6 +99,7 @@ public class InputController {
 					targetCare);/*
 								 * 時間の条件をひとまずチェック（後から条件増えるかもしれんので。ここはもうちょい抽象化したい
 								 */
+			System.out.println("judge reesult"+timeExecutionValidator);
 
 		}
 		return result;

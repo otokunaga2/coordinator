@@ -10,6 +10,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.Cursor;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.WriteResult;
 
 import jp.kobe_u.cs27.memory.coordinator.model.CareECA;
 
@@ -49,19 +50,14 @@ public class CareECADAO {
 		return obj.toString();
 	}
 
-	public boolean removeECA(String _id){
-
-
-
-//		db.find(this.collectionName, );
-
-		return true;
+	public boolean removeECA(int unique_id){
+		DBCollection collection = db.getCollection(this.collectionName);
+		BasicDBObject query = new BasicDBObject();
+		query.append("unique_id", unique_id);
+		WriteResult result = collection.remove(query);
+		return result.isUpdateOfExisting();
 	}
 
-	public boolean deleteECA(){
-
-		return true;
-	}
 	/**
 	 * トリガーイベントを利用して、データを検索
 	 * @param t_event
@@ -71,8 +67,8 @@ public class CareECADAO {
 		BasicDBObject queryObj = new BasicDBObject();
 		queryObj.append(PROPERTY,eca.getProperty());
 		queryObj.append(VALUE, eca.getValue());
-		queryObj.append(TIMECONDITION, new BasicDBObject("$ne","{}"));/*データの比較emptyではないものを選択*/
-		queryObj.append(TIMECONTEXT, new BasicDBObject("$ne","{}"));
+		queryObj.append(TIMECONDITION, new BasicDBObject("$ne",-100000));/*データの比較emptyではないものを選択*/
+		queryObj.append(TIMECONTEXT, new BasicDBObject("$ne",-100000));
 		DBCursor cursor = db.find(collectionName, queryObj);
 
 		List careECAList = new ArrayList<CareECA>();

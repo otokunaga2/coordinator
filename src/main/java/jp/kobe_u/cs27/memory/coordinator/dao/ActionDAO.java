@@ -9,6 +9,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 
+import jp.kobe_u.cs27.memory.coordinator.config.ApplicationEnv;
 import jp.kobe_u.cs27.memory.coordinator.model.Action;
 
 public class ActionDAO {
@@ -26,9 +27,15 @@ public class ActionDAO {
 		dateTime = new DateTime();
 	}
 
-	public String updateAction(){
+	public boolean updateAction(long actionId){
 		DBCollection collection = db.getCollection(actionCollectionName);
-		return "";
+		BasicDBObject query = new BasicDBObject();
+		query.append(ACTIONID, actionId);
+		DBObject actionDBObject = collection.findOne(query);
+		actionDBObject.removeField(LASTINVOCATION);
+		actionDBObject.put(LASTINVOCATION, dateTime.now().toString(ApplicationEnv.dateTimePattern));
+		WriteResult result = collection.update(query, actionDBObject);
+		return result.isUpdateOfExisting();
 	}
 	public Action findAction(long actionId){
 		DBCollection collection = db.getCollection(actionCollectionName);
@@ -42,13 +49,15 @@ public class ActionDAO {
 			action.setUrl(actionDBObject.get(URL).toString());
 		}catch(NoSuchElementException e){
 			e.printStackTrace();
+		}catch(NullPointerException e){
+			return null;/*データを発見できないとき*/
 		}
 		return action;
 	}
 
-	public boolean deleteAction(String actionId){
-		DBCollection collection = db.getCollection(actionCollectionName);
+	public boolean deleteAction(long actionId){
 		BasicDBObject query = new BasicDBObject();
+		DBCollection collection = db.getCollection(actionCollectionName);
 		query.append(ACTIONID, actionId);
 		WriteResult result = collection.remove(query);
 		return result.isUpdateOfExisting();/*データが*/

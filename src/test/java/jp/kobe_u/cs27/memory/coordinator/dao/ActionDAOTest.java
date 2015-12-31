@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import jp.kobe_u.cs27.memory.coordinator.model.Action;
@@ -24,9 +23,10 @@ public class ActionDAOTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateAction() {
-		fail("まだ実装されていません");
+		boolean actual = actionDAO.updateAction(15);
+		assertTrue(actual);
 	}
 
 	@Test
@@ -39,14 +39,18 @@ public class ActionDAOTest {
 		assertNotNull(result);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteAction() {
+
+
+//		actionDAO.deleteAction(actionId);
+
 		fail("まだ実装されていません");
 	}
 
 	@Test
 	public void testCreateAction() {
-		String actionId = "1";
+		String actionId = "1xt";
 		actionDAO.createAction("test action", "http://example.com");
 	}
 
