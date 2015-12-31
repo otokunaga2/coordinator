@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 
 import jp.kobe_u.cs27.memory.coordinator.model.Action;
 
@@ -45,11 +46,12 @@ public class ActionDAO {
 		return action;
 	}
 
-	public DBObject deleteAction(String actionId){
+	public boolean deleteAction(String actionId){
 		DBCollection collection = db.getCollection(actionCollectionName);
 		BasicDBObject query = new BasicDBObject();
 		query.append(ACTIONID, actionId);
-		return null;
+		WriteResult result = collection.remove(query);
+		return result.isUpdateOfExisting();/*データが*/
 	}
 
 	public Object createAction(String description, String url){
@@ -61,8 +63,4 @@ public class ActionDAO {
 		Object obj = db.add(actionCollectionName, document);
 		return obj;
 	}
-
-
-
-
 }

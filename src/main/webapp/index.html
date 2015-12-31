@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Cover Template for Bootstrap</title>
+    <title>新しいケア条件の作成p</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -54,15 +54,27 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <form method="POST"  action="http://localhost:8080/coordinator/webapi/create">
+            <h1 class="cover-heading">ケアルールの作成</h1>
+            <form action="http://localhost:8080/coordinator/webapi/create/detail"  method="POST" >
 				<input type="text" name="property" size="50" value="testPropByForm"></p>
 				<input type="text" name="value" size="50"  value="tesValByForm"></p>
 				<input type="text" name="from" size="50"  value="11:00:00"></p>
 				<input type="text" name="to" size="50"  value="15:00:00"></p>
+				<input type="text" name="timeContext" size="50"  value="{}"></p>
+				<input type="text" name="actionId" size="50"  value="-100"></p>
 
 				<p><input type="submit" value="送信する"></p>
             </form>
+
+
+			<h1 class="cover-heading">データを送信するテスト</h1>
+			   <form action="http://localhost:8080/coordinator/webapi/consume" method="POST" >
+				<input type="text" name="property" size="50" value="testPropByForm"></p>
+				<input type="text" name="value" size="50"  value="tesValByForm"></p>
+				<p><input type="submit" value="送信する"></p>
+            </form>
+
+
 
           </div>
 

@@ -93,9 +93,18 @@ public class CareECADAO {
 			}catch(NoSuchElementException e){
 				e.printStackTrace();
 			}finally{
-				cursor.next();
+				try{
+					cursor.next();
+				}catch(NoSuchElementException ne){
+
+				}finally{
+
+				}
+
 			}
 		}
+		cursor.close();
+
 		return careECAList;
 	}
 

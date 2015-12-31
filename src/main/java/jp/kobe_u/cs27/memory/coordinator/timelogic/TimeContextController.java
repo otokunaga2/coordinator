@@ -23,8 +23,8 @@ public class TimeContextController {
 	public DateTime getCurrentDateTime(){
 		return currentDateTime;
 	}
-	
-	
+
+
 	public boolean evaluate(TimeCondition timeCond) {
 		String startTime = timeCond.getFrom();
 		String endTime = timeCond.getTo();
@@ -35,8 +35,6 @@ public class TimeContextController {
 		isBefore = endDateTime.isAfterNow();
 		isAfter = startDateTime.isBeforeNow();
 
-		System.out.println("before"+isBefore);
-		System.out.println("after:"+isAfter);
 		if (isAfter && isBefore) {
 			return true;
 		} else {
@@ -44,7 +42,7 @@ public class TimeContextController {
 		}
 	}
 
-	
+
 	private DateTime createDateTimeFormatUsingStr(
 			String dateTime/* e.g. 12:13:00 */) {
 		Pattern pattern = Pattern.compile(":");

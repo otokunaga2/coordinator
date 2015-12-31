@@ -8,7 +8,7 @@ public class CareECA {
 	private String timeCondition;
 	private String condition;
 
-	private String actionId;/* CareActionのobjectidを参照するように設計 */
+	private long actionId;
 
 	/**
 	 * @param prop
@@ -59,11 +59,11 @@ public class CareECA {
 		this.condition = timeContext;
 	}
 
-	public String getActionId() {
+	public long getActionId() {
 		return actionId;
 	}
 
-	public void setActionId(String actionId) {
+	public void setActionId(long actionId) {
 		this.actionId = actionId;
 	}
 

@@ -51,22 +51,18 @@ public class MyResource {
     	TriggerEvent event = new TriggerEvent();
     	event.setProperty(prop);
     	event.setValue(value);
-    	System.out.println(prop);
-    	System.out.println(value);
+
     	if(inputCtroller == null){
     		inputCtroller = new InputController();
     	}
     	List<CareECA> eventList = inputCtroller.findConditionUsingEvent(event);
     	boolean result = false;
-    	System.out.println("here");
     	if(eventList != null){
     		result = inputCtroller.isAction(eventList);
+    		return Response.ok(200).build();
     	}
-//
-    	if(result == true){
-    		return Response.ok().build();
-    	}
-        return Response.ok().build();
+    	return Response.ok(202).build();
+
     }
 
 
@@ -88,11 +84,11 @@ public class MyResource {
     }
 
     @POST
-    @Path("/create")
+    @Path("/create/detail")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(@Context UriInfo uriInfo, @FormParam("property") String prop, @FormParam("value") String value,  @FormParam("from") String from, @FormParam("to") String to){
-    	boolean result = inputCtroller.saveECA(prop, value, from, to);
+    public Response create(@Context UriInfo uriInfo, @FormParam("property") String prop, @FormParam("value") String value,  @FormParam("from") String from, @FormParam("to") String to, @FormParam(value="actionId") long actionId, @FormParam(value = "timeContext") String timeCtx ){
+    	boolean result = inputCtroller.saveECA(prop, value, from, to, timeCtx, actionId);
     	if(result == true){
     		return Response.ok().build();
     	}else{

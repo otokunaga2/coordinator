@@ -33,6 +33,7 @@ public class InputController {
 		CareECA eca = new CareECA();
 		eca.setProperty(prop);
 		eca.setValue(val);
+
 		TimeCondition timeCond = new TimeCondition(from,to);
 		String jsonConvrtedTimeCond = gson.toJson(timeCond);
 		eca.setTimeCondition(jsonConvrtedTimeCond);
@@ -43,6 +44,24 @@ public class InputController {
 			return false;
 		}
 	}
+	public boolean saveECA(String prop, String val, String from, String to, String timeCtx, long actionId){
+		CareECA eca = new CareECA();
+		eca.setProperty(prop);
+		eca.setValue(val);
+		eca.setTimeContext(timeCtx);
+		eca.setActionId(actionId);
+		System.out.println("actionId is"+actionId);
+		TimeCondition timeCond = new TimeCondition(from,to);
+		String jsonConvrtedTimeCond = gson.toJson(timeCond);
+		eca.setTimeCondition(jsonConvrtedTimeCond);
+		String result = ecaDAO.createECA(eca);
+		if(result != null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 
 	/**
 	 * イベントの条件をもとに、実行可能なケアを検索するためのメソッド
