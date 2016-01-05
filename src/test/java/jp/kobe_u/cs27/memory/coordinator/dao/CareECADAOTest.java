@@ -14,7 +14,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.util.JSON;
 
 import jp.kobe_u.cs27.memory.coordinator.model.CareECA;
-import jp.kobe_u.cs27.memory.coordinator.model.TimeCondition;
+import jp.kobe_u.cs27.memory.coordinator.model.TimeIntervalCondition;
 
 public class CareECADAOTest {
 
@@ -40,7 +40,7 @@ public class CareECADAOTest {
 		eca.setValue("genkan");
 		BasicDBObject testTimeConditon = new BasicDBObject();
 		testTimeConditon = (BasicDBObject)JSON.parse("{'from':'11:00','to':'12:00'}");
-		TimeCondition tContext = new TimeCondition();
+		TimeIntervalCondition tContext = new TimeIntervalCondition();
 
 		String jsonTiemContext = "{'from':'11:00','to':'12:00'}";
 		eca.setTimeCondition(jsonTiemContext);

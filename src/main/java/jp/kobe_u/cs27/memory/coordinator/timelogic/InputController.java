@@ -12,7 +12,7 @@ import jp.kobe_u.cs27.memory.coordinator.dao.ActionDAO;
 import jp.kobe_u.cs27.memory.coordinator.dao.CareECADAO;
 import jp.kobe_u.cs27.memory.coordinator.model.AbstractEvent;
 import jp.kobe_u.cs27.memory.coordinator.model.CareECA;
-import jp.kobe_u.cs27.memory.coordinator.model.TimeCondition;
+import jp.kobe_u.cs27.memory.coordinator.model.TimeIntervalCondition;
 
 public class InputController {
 	private CareECADAO ecaDAO = null;
@@ -37,7 +37,7 @@ public class InputController {
 		eca.setProperty(prop);
 		eca.setValue(val);
 
-		TimeCondition timeCond = new TimeCondition(from,to);
+		TimeIntervalCondition timeCond = new TimeIntervalCondition(from,to);
 		String jsonConvrtedTimeCond = gson.toJson(timeCond);
 		eca.setTimeCondition(jsonConvrtedTimeCond);
 		String result = ecaDAO.createECA(eca);
@@ -54,7 +54,7 @@ public class InputController {
 		eca.setTimeContext(timeCtx);
 		eca.setActionId(actionId);
 		System.out.println("actionId is"+actionId);
-		TimeCondition timeCond = new TimeCondition(from,to);
+		TimeIntervalCondition timeCond = new TimeIntervalCondition(from,to);
 		String jsonConvrtedTimeCond = gson.toJson(timeCond);
 		eca.setTimeCondition(jsonConvrtedTimeCond);
 		System.out.println(jsonConvrtedTimeCond);
@@ -112,8 +112,8 @@ public class InputController {
 	private boolean checkTimeCondition(CareECA targetCare) {
 		String cond = targetCare.getTimeCondition();
 		/* jsonからPojoへマッピング */
-		TimeCondition timeCond = gson.fromJson(targetCare.getTimeCondition(), TimeCondition.class);
-		boolean result = timeCtxController.evaluate(timeCond);
+		TimeIntervalCondition timeCond = gson.fromJson(targetCare.getTimeCondition(), TimeIntervalCondition.class);
+		boolean result = timeCtxController.isWithinTimeInterval(timeCond);
 		return result;
 	}
 

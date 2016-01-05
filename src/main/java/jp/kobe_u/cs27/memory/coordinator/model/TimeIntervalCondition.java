@@ -3,13 +3,13 @@ package jp.kobe_u.cs27.memory.coordinator.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TimeCondition extends AbstractCondition{
+public class TimeIntervalCondition extends AbstractCondition{
 	private String from;
 	private String to;
-	public TimeCondition(){
+	public TimeIntervalCondition(){
 
 	}
-	public TimeCondition(String from, String to){
+	public TimeIntervalCondition(String from, String to){
 		boolean conditionFrom = checkDateFormat(from);
 		boolean conditionTo = checkDateFormat(to);
 		if(!conditionFrom){

@@ -1,7 +1,6 @@
 package jp.kobe_u.cs27.memory.coordinator.dao;
 
 import org.joda.time.DateTime;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.WriteResult;

@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 
 import jp.kobe_u.cs27.memory.coordinator.dao.CareECADAO;
 import jp.kobe_u.cs27.memory.coordinator.model.CareECA;
-import jp.kobe_u.cs27.memory.coordinator.model.TimeCondition;
+import jp.kobe_u.cs27.memory.coordinator.model.TimeIntervalCondition;
 import jp.kobe_u.cs27.memory.coordinator.model.TriggerEvent;
 
 public class InputControllerTest {
@@ -45,7 +45,7 @@ public class InputControllerTest {
 	public void testCreateECA(){
 		String prop = "testPropVal";
 		String val = "tstVal";
-		TimeCondition cond = new TimeCondition("10:00:00","12:00:00");
+		TimeIntervalCondition cond = new TimeIntervalCondition("10:00:00","12:00:00");
 		Gson gson = new Gson();
 		String convTimeCond = gson.toJson(cond);
 		boolean actual = inputCtroller.saveECA(prop, val,"10:00:00", "12:00:00");

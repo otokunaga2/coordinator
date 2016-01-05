@@ -2,10 +2,12 @@ package jp.kobe_u.cs27.memory.coordinator.timelogic;
 
 import java.util.regex.Pattern;
 
+import javax.validation.constraints.Null;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTime.Property;
 
-import jp.kobe_u.cs27.memory.coordinator.model.TimeCondition;
+import jp.kobe_u.cs27.memory.coordinator.model.TimeIntervalCondition;
 
 /**
  *
@@ -24,14 +26,16 @@ public class TimeContextController {
 		return currentDateTime;
 	}
 
-
-	public boolean evaluate(TimeCondition timeCond) {
+	
+	public boolean isWithinTimeInterval(TimeIntervalCondition timeCond) {
 		String startTime = timeCond.getFrom();
 		String endTime = timeCond.getTo();
+		if(startTime == null || endTime == null){
+			return false;
+		}
 		DateTime startDateTime = createDateTimeFormatUsingStr(startTime);
 		DateTime endDateTime = createDateTimeFormatUsingStr(endTime);
-		System.out.println(startDateTime.toString());
-		System.out.println(endDateTime.toString());
+		
 		boolean isAfter = false;
 		boolean isBefore = false;
 		isBefore = endDateTime.isAfterNow();
@@ -43,6 +47,7 @@ public class TimeContextController {
 			return false;
 		}
 	}
+	
 
 
 	private DateTime createDateTimeFormatUsingStr(
@@ -52,9 +57,13 @@ public class TimeContextController {
 		Property month = currentDateTime.dayOfMonth();
 		Property day = currentDateTime.dayOfWeek();
 		DateTime dt = new DateTime();
-		System.out.println(dateTime.toString());
-		String[] splitedDateTime = pattern.split(dateTime);
-		System.out.println(splitedDateTime);
+		String[] splitedDateTime;
+		try{
+			splitedDateTime = pattern.split(dateTime);
+			System.out.println(splitedDateTime.toString());
+		}catch(NullPointerException e){
+			return null;
+		}
 		Integer tempVal = new Integer(0);
 		dt = new DateTime(currentDateTime.now().getYear(), currentDateTime.now().getMonthOfYear(),
 				currentDateTime.now().getDayOfMonth(), Integer.parseInt(splitedDateTime[0]/*hour*/),
